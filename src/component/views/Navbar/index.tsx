@@ -16,7 +16,7 @@ const Navbar = () => {
     const [cardItemNumber,isCardItemNumber] = useState<number>(0);
     return(
         <div>
-        <div className="py-6 flex items-center justify-between"  >
+        <div className="sticky top-0 bg-white py-6 flex items-center justify-between"  >
             <div className="w-36 flex-shrink-0">
                 <Image src={"/logo.webp"} alt="Logo" width={500} height={500}></Image>
             </div>
@@ -34,11 +34,11 @@ const Navbar = () => {
             </ul>
             <div className="border flex items-center text-gray-600 px-3 rounded-md">
                 <BiSearch/>
-                <input type="text" className="pl-1 pr-5 py-1 w-80 flex-grow" placeholder="What are you looking for?" />
+                <input type="text" className="pl-1 pr-5 py-1 w-80 flex-grow focus:outline-none" placeholder="What are you looking for?" />
             </div> 
             <div className="relative flex-shrink-0 w-11 h-11 flex bg-gray-300 rounded-full items-center justify-center">
                 <div className="absolute w-4 h-4 bg-red-400 top-1 text-xs rounded-full font-light
-                                flex items-center justify-center right-0">3</div>
+                                flex items-center justify-center right-0">{cardItemNumber}</div>
                 <BsFillCartCheckFill size={25}/>
             </div>
            </div>

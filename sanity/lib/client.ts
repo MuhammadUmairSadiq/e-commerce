@@ -1,10 +1,10 @@
 import { createClient } from 'next-sanity'
+import { SanityClient } from "sanity";
 
-import { apiVersion, dataset, projectId, useCdn } from '../env'
+export let client: SanityClient = createClient({
+  projectId: `${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}`,
+  dataset: `${process.env.NEXT_PUBLIC_SANITY_DATASET}`,
+  apiVersion: "2023-07-25",
+  useCdn: false,
+});
 
-export const client = createClient({
-  apiVersion,
-  dataset,
-  projectId,
-  useCdn,
-})

@@ -3,6 +3,8 @@ import ProductType from "@/component/views/ProductType";
 import { oneProductType, responseType } from "@/component/utilis/ProductsType";
 import ProductCard from "@/component/views/ProductCard";
 import Description from "@/component/views/Description";
+import Newsletter from "@/component/views/Newsletter";
+import Footer from "@/component/views/Footer";
 
 async function fetchAllProductsData() {
   let res = await fetch(
@@ -25,10 +27,12 @@ export default async function Home() {
   let { result }: responseType = await fetchAllProductsData();
   return (
     <div>
-     { /*<Main />
+      <Main />
       <ProductType />
       <ProductCard ProductData = {result}/>
-      <Description/> */ }
+      <Description/> 
+      <Newsletter />
+      
     </div>
   );
 }

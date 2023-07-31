@@ -10,10 +10,21 @@ import Link from "next/link";
 import DropDown from "../subcomponents/DropDown";
 import { useState } from "react";
 import Expand from "../subcomponents/Expand";
+import { useRouter } from "next/navigation";
+
 
 const Navbar = () => {
   const [isNavbarOpen, setNavbarOpen] = useState<boolean>(false);
   const [cardItemNumber, isCardItemNumber] = useState<number>(0);
+  const [searchQuery, setsearchQuery] = useState("");
+  const router = useRouter();
+
+function handleSerachCalledFunc(e:any) {
+   if(e.key === "Enter" && e.keyCode === 13) {
+    router.push(`/search/${searchQuery}`);
+   }
+}
+
   return (
     <div>
       <div className="sticky top-0 backdrop-blur-lg bg-opacityDownColor py-6 flex items-center justify-between">
@@ -47,9 +58,14 @@ const Navbar = () => {
             ))}
           </ul>
           <div className="border flex items-center text-gray-600 px-3 rounded-md">
-            <BiSearch />
+            <Link href={`/search/${searchQuery}`}>
+              <BiSearch />
+            </Link>
             <input
               type="text"
+              value={searchQuery}
+              onKeyDown={handleSerachCalledFunc}
+              onChange={(e) => setsearchQuery(e.target.value)}
               className="pl-1 pr-5 py-1 w-80 flex-grow focus:outline-none"
               placeholder="What are you looking for?"
             />

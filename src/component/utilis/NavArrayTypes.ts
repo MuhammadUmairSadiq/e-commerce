@@ -41,7 +41,7 @@ export const NavbarArray: Array<NavbarItemType> = [
   },
   {
     label: "Male",
-    href: "/male",
+    href: "/male/male",
     isDropDown: true,
     dropDownData: [
       {

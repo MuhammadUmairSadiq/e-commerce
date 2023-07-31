@@ -31,7 +31,7 @@ export default async function Home() {
       <ProductType />
       <ProductCard ProductData = {result}/>
       <Description/> 
-      <Newsletter />*/}
+  <Newsletter />*/}
       
     </div>
   );

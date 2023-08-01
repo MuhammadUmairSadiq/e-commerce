@@ -15,11 +15,20 @@ const ContextWrapper: FC<{ children: ReactNode }> = ({children}) => {
   }
 
   const [state, dispatch] = useReducer(cartReducer,starter);
-
-  useEffect(()=>{
-    localStorage.setItem("cartState: ", JSON.stringify(state));
-  },[state])
   
+  useEffect(() => {
+    let cart = localStorage.getItem("cart") as string;
+    if (cart == null) {
+      localStorage.setItem("cart", state.cart);
+    } {/*else {
+      starter.cart = JSON.parse(cart);
+    }*/}
+  });
+
+  useEffect(() => {
+    localStorage.setItem("cart", state.cart);
+  }, [state.cart]);
+
   return (
     <cartContext.Provider value={{state, dispatch}}>
       {children}

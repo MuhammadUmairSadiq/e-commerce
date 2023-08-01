@@ -6,6 +6,8 @@ import { client } from "../../../../sanity/lib/client";
 import Image from "next/image";
 import { BsCart2 } from "react-icons/bs";
 import ContextWrapper, { cartContext } from "@/global/Context";
+import PortableText from "react-portable-text";
+import toast, { Toaster } from "react-hot-toast";
 
 const builder = imageUrlBuilder(client);
 
@@ -30,16 +32,26 @@ const ProductDetails: FC<{ item: oneProductType }> = ({ item }) => {
     }
   }
 
+  const notification = (title: string) => {
+    toast(` ${quantity} ${title} added to Cart`, {
+      icon: "👏",
+      position: "top-right",
+    });
+  };
+
   function handleAddToCart() {
     let dataInCart = {
         productId : item._id,
         quantity:quantity
     }
     dispatch({ payload: "addToCart", data : dataInCart });
+    notification(item.productName);
   }
+
 
   return (
     <ContextWrapper>
+      <Toaster />
       <div className="flex flex-col lg:flex-row justify-center items-center py-7">
         {/* LEFT */}
         <div className="flex gap-x-4 md:gap-x-8">
@@ -121,7 +133,10 @@ const ProductDetails: FC<{ item: oneProductType }> = ({ item }) => {
           </div>
 
           <div className="flex gap-x-8 items-center">
-            <button onClick={()=>handleAddToCart()} className="flex items-center text-white bg-gray-900 border border-gray-500 px-4 py-2">
+            <button
+              onClick={() => handleAddToCart()}
+              className="flex items-center text-white bg-gray-900 border border-gray-500 px-4 py-2"
+            >
               <BsCart2 />
               &nbsp; &nbsp; Add to Cart
             </button>
@@ -132,6 +147,37 @@ const ProductDetails: FC<{ item: oneProductType }> = ({ item }) => {
           </div>
         </div>
       </div>
+
+      <div>
+        <div className="relative py-14 px-2 border-b border-gray-400">
+          <h2 className="top-0 absolute text-6xl md:text-[9rem] font-bold text-gray-200 text-center mx-auto -z-50 ">
+            Overview
+          </h2>
+          <p className="font-semibold text-xl">Product Information</p>
+        </div>
+        <div className="text-gray-600">
+          <div className="flex px-2 py-4">
+            <div className="w-80">
+              <h3 className="font-semibold">PRODUCT DETAILS</h3>
+            </div>
+            <p>
+              <PortableText content={item.description} />
+            </p>
+          </div>
+          <div className="flex px-2 py-8">
+            <div className="w-80">
+              <h3 className="font-semibold">PRODUCT CARE</h3>
+            </div>
+            <ul className="pl-3 list-disc font-semibold text-gray-900">
+              <li>Hand wash using cold water.</li>
+              <li>Do not using bleach.</li>
+              <li>Hang it to dry.</li>
+              <li>Iron on low temperature.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div className="h-16" />
     </ContextWrapper>
   );
 };

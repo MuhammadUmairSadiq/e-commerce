@@ -27,11 +27,11 @@ export default async function Home() {
   let { result }: responseType = await fetchAllProductsData();
   return (
     <div>
-      {/*<Main />
+      {/* <Main />
       <ProductType />
       <ProductCard ProductData = {result}/>
       <Description/> 
-  <Newsletter />*/}
+      <Newsletter /> */}
       
     </div>
   );

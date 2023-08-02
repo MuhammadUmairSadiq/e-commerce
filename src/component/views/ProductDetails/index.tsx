@@ -96,7 +96,7 @@ const ProductDetails: FC<{ item: oneProductType }> = ({ item }) => {
           <div>
             <h1 className="text-3xl text-gray-700">{item.productName}</h1>
             <p className="text-pink-600 text-xl font-medium">
-              {item.productTypes[1]}
+              {item.productTypes[0]}
             </p>
           </div>
 

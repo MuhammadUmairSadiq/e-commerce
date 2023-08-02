@@ -1,7 +1,7 @@
-function CheckerAndReturner(orignalData:any,newData:any) {
-  for (let index = 0; index < orignalData.length; index++) {
-    const element = orignalData[index];
-    if(element.productId == newData.productId) {
+function checkerAndReturner(orgnalData: any, newData: any) {
+  for (let index = 0; index < orgnalData.length; index++) {
+    const element = orgnalData[index];
+    if (element.productId == newData.productId) {
       return element;
     }
   }
@@ -9,14 +9,14 @@ function CheckerAndReturner(orignalData:any,newData:any) {
 
 export function cartReducer(state: any, action: any) {
   if (action.payload === "addToCart") {
-    let res = CheckerAndReturner(state.cart, action.data);
-    if (res == undefined) {
+    let response = checkerAndReturner(state.cart, action.data);
+    if (!response) {
       return {
         cart: [...state.cart, action.data],
       };
     } else {
       let dataToStoreAgain = state.cart.filter(
-        (item: any) => item.productId !== res.productId
+        (item: any) => item.productId !== response.productId
       );
       return {
         cart: [...dataToStoreAgain, action.data],
@@ -27,6 +27,5 @@ export function cartReducer(state: any, action: any) {
   } else if (action.payload === "updateToCart") {
     return state;
   }
-   return state 
+  return state;
 }
-

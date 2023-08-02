@@ -1,21 +1,25 @@
-import { cartContext } from '@/global/Context';
-import {useContext }from 'react'
-import { BsFillCartCheckFill } from "react-icons/bs";
+"use client";
+import { cartContext } from "@/global/Context";
+import { useContext, useEffect, useState } from "react";
+import { BsCart2 } from "react-icons/bs";
 
-const CartState = () => {
-    let {state} = useContext(cartContext);
-    console.log(state)
+const Cartstate = () => {
+  {
+    /*
+    let data = localStorage.getItem("cart") as string;
+      quantity;
+    */
+  }
+
+  let { cartArray, quantity } = useContext(cartContext); 
   return (
-    <div className="relative flex-shrink-0 w-11 h-11 flex bg-gray-300 rounded-full items-center justify-center">
-      <div
-        className="absolute w-4 h-4 bg-red-400 top-1 text-xs rounded-full font-light
-                                flex items-center justify-center right-0"
-      >
-        {state.cart.length}
+    <div className="flex-shrink-0 relative w-11 h-11 bg-gray-300 rounded-full flex items-center justify-center">
+      <div className="w-4 h-4 absolute top-1 right-2 bg-red-400 text-xs font-light rounded-full flex justify-center items-center">
+        {quantity}
       </div>
-      <BsFillCartCheckFill size={25} />
+      <BsCart2 size={24} />
     </div>
   );
-}
+};
 
-export default CartState
+export default Cartstate;

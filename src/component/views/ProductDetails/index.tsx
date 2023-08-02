@@ -45,7 +45,7 @@ const ProductDetails: FC<{ item: oneProductType }> = ({ item }) => {
         quantity:quantity
     }
     dispatch({ payload: "addToCart", data : dataInCart });
-    notification(item.productName);
+    notification(item.productName); 
   }
 
 

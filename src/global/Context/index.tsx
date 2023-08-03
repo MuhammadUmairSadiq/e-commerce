@@ -44,20 +44,23 @@ const ContextWrapper = ({ children }: { children: ReactNode }) => {
     }
   }, [cartArray]);
 
-  async function fetchApiForAllCartItems() {
-    if (userData) {
-      let res = await fetch(`/api/cartfunc?user_id=${userData.uuid}`);
-      if (!res.ok) {
-        throw new Error("Failed to Fetch");
-      }
-      let dataToreturn = await res.json();
-      await setCartArray((prev: any) => dataToreturn.allCartData);
-      router.refresh();
-      if (dataToreturn) {
-        return true;
-      }
-    }
-  }
+ const fetchApiForAllCartItems = async () => {
+   try {
+     // Check if window is defined (i.e., running in the browser)
+     if (typeof window !== "undefined") {
+       let res = await fetch(`/api/cartfunc?user_id=${userData.uuid}`);
+       if (!res.ok) {
+         throw new Error("Failed to Fetch");
+       }
+       let dataToreturn = await res.json();
+       await setCartArray((prev: any) => dataToreturn.allCartData);
+     }
+   } catch (error) {
+     console.error("Fetch Error:", error);
+     // Handle the fetch error here, e.g., set a default value for the cart array
+     // or display an error message to the user.
+   }
+ };
 
   useEffect(() => {
     fetchApiForAllCartItems();

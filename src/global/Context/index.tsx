@@ -111,7 +111,7 @@ const ContextWrapper = ({ children }: { children: ReactNode }) => {
         setUserData(null);
       }
     });
-  }, );
+  }, []);
 
   let provider = new GoogleAuthProvider();
 

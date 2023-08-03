@@ -6,33 +6,25 @@ export const cartContext = createContext<any>(null);
 
 const ContextWrapper: FC<{ children: ReactNode }> = ({children}) => {
   const starter = {
-    cart : [
-      {
-        productId:"",
-        quantity:2
-      }
-    ],
+    cart : [],
   }
 
   const [state, dispatch] = useReducer(cartReducer,starter);
 
   useEffect(() => {
-    let cart = localStorage.getItem("cart") as string
-    
-   if (cart === null) {
+    let cart = localStorage.getItem("cart") as string;
+
+    if (cart === null) {
       localStorage.setItem("cart", JSON.stringify(state.cart));
     } else {
-        try {
-          starter.cart = JSON.parse(cart);
-        } catch (error) {
-          
-}
-      }});
+        starter.cart = JSON.parse(cart);
+    }
+  });
 
   
 
   useEffect(() => {
-    localStorage.setItem("cart", state.cart);
+    localStorage.setItem("cart", JSON.stringify(state.cart));
   }, [state.cart]);
  
   return (

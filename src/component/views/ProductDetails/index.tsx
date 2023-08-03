@@ -33,9 +33,8 @@ const ProductDetails: FC<{ item: oneProductType }> = ({ item }) => {
   }
 
   const notification = (title: string) => {
-    toast(` ${quantity} ${title} added to Cart`, {
-      icon: "👏",
-      position: "top-right",
+    toast.success(` ${quantity} ${title} added to Cart`, {
+      position: "top-center",
     });
   };
 

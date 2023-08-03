@@ -1,16 +1,10 @@
 "use client"
 import { oneProductType } from "@/component/utilis/ProductsType";
-import { cartContext } from "@/global/Context";
 import Image from "next/image";
 import { FC, useContext, useEffect, useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { client } from "../../../../../sanity/lib/client";
 import imageUrlBuilder from "@sanity/image-url";
-import toast, { Toaster } from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import LoadingComp from "../../../shared/Wrapper/LoadingComp";
-import { setTimeout } from "timers";
-import { auth } from "@/lib/firebase";
 
 const builder: any = imageUrlBuilder(client);
 function urlFor(source: any) {

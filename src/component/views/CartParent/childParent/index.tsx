@@ -40,7 +40,7 @@ const CartComp = ({  allProductsOfStore,}: {  allProductsOfStore: Array<oneProdu
         <div className="flex flex-col basis-9/12 gap-2">
           {allProductsForCart.map((item: oneProductType, index: number) => {
             return (
-              <div className="flex flex-shrink-0 gap-6">
+              <div key={index} className="flex flex-shrink-0 gap-6">
                 <div className="w-[16rem]">
                   <Image
                     className="rounded-xl"

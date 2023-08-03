@@ -3,8 +3,10 @@ import {
   ReactNode,
   createContext,
   useEffect,
+  useReducer,
   useState,
 } from "react";
+import { cartReducer } from "../Reducer";
 import { auth } from "@/lib/firebase";
 import {
   GoogleAuthProvider,
@@ -17,6 +19,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import BASE_PATH_FORAPI from "@/component/shared/BasePath";
 
 export const cartContext = createContext<any>(null);
 
@@ -44,23 +47,20 @@ const ContextWrapper = ({ children }: { children: ReactNode }) => {
     }
   }, [cartArray]);
 
- const fetchApiForAllCartItems = async () => {
-   try {
-     // Check if window is defined (i.e., running in the browser)
-     if (typeof window !== "undefined") {
-       let res = await fetch(`/api/cartfunc?user_id=${userData.uuid}`);
-       if (!res.ok) {
-         throw new Error("Failed to Fetch");
-       }
-       let dataToreturn = await res.json();
-       await setCartArray((prev: any) => dataToreturn.allCartData);
-     }
-   } catch (error) {
-     console.error("Fetch Error:", error);
-     // Handle the fetch error here, e.g., set a default value for the cart array
-     // or display an error message to the user.
-   }
- };
+  async function fetchApiForAllCartItems() {
+    if (userData) {
+      let res = await fetch(`/api/cartfunc?user_id=${userData.uuid}`);
+      if (!res.ok) {
+        throw new Error("Failed to Fetch");
+      }
+      let dataToreturn = await res.json();
+      await setCartArray((prev: any) => dataToreturn.allCartData);
+      router.refresh();
+      if (dataToreturn) {
+        return true;
+      }
+    }
+  }
 
   useEffect(() => {
     fetchApiForAllCartItems();

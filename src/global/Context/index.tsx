@@ -3,10 +3,8 @@ import {
   ReactNode,
   createContext,
   useEffect,
-  useReducer,
   useState,
 } from "react";
-import { cartReducer } from "../Reducer";
 import { auth } from "@/lib/firebase";
 import {
   GoogleAuthProvider,

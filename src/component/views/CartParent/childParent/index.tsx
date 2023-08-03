@@ -1,7 +1,7 @@
 "use client"
 import { oneProductType } from "@/component/utilis/ProductsType";
 import Image from "next/image";
-import { FC, useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { client } from "../../../../../sanity/lib/client";
 import imageUrlBuilder from "@sanity/image-url";

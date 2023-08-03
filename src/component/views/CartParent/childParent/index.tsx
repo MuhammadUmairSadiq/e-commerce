@@ -10,6 +10,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import LoadingComp from "../../../shared/Wrapper/LoadingComp";
 import { setTimeout } from "timers";
+import { auth } from "@/lib/firebase";
 
 const builder: any = imageUrlBuilder(client);
 function urlFor(source: any) {

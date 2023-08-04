@@ -50,9 +50,10 @@ const ContextWrapper = ({ children }: { children: ReactNode }) => {
   async function fetchApiForAllCartItems() {
     if (userData) {
       let res = await fetch(`/api/cartfunc?user_id=${userData.uuid}`);
-      if (!res.ok) {
+      try {if (!res.ok) {
         throw new Error("Failed to Fetch");
       }
+    }catch(error) {}
       let dataToreturn = await res.json();
       await setCartArray((prev: any) => dataToreturn.allCartData);
       router.refresh();

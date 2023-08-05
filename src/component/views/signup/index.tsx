@@ -155,7 +155,7 @@ const SignupFormComp = () => {
                     </button>
                 </div>
                 <div className="flex items-center justify-between space-x-2">
-                    <Link className='text-blue-400 text-sm' href={"/login"}>Already have an account?</Link>
+                    <Link className='text-blue-400 text-sm' href={"/signIn"}>Already have an account?</Link>
                     <button
                         disabled={loading}
                         className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 md:px-5 rounded focus:outline-none focus:shadow-outline"

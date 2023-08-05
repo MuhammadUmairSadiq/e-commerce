@@ -4,6 +4,7 @@ import { Maven_Pro } from 'next/font/google'
 import Navbar from '@/component/views/Navbar'
 import Wrapper from '@/component/shared/Wrapper'
 import Footer from '@/component/views/Footer'
+import TopLabel from '@/component/views/topLabel'
 
 const inter = Maven_Pro({
   subsets: ['latin'],
@@ -23,6 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <div className="overflow-hidden w-screen">
+          <TopLabel />
+        </div>
         <Wrapper>
           <Navbar />
           {/*<Navbar />*/}

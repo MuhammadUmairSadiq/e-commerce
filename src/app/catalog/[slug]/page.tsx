@@ -15,7 +15,6 @@ export async function generateMetadata({
   const titleToSet: oneProductType = product.result.find(
     (item: oneProductType) => item.slug.current == slug
   );
-
   return {
     title: titleToSet.productName,
     description: titleToSet.description,

@@ -19,7 +19,6 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import BASE_PATH_FORAPI from "@/component/shared/BasePath";
 
 export const cartContext = createContext<any>(null);
 
@@ -50,10 +49,9 @@ const ContextWrapper = ({ children }: { children: ReactNode }) => {
   async function fetchApiForAllCartItems() {
     if (userData) {
       let res = await fetch(`/api/cartfunc?user_id=${userData.uuid}`);
-      try {if (!res.ok) {
+      if (!res.ok) {
         throw new Error("Failed to Fetch");
       }
-    }catch(error) {}
       let dataToreturn = await res.json();
       await setCartArray((prev: any) => dataToreturn.allCartData);
       router.refresh();

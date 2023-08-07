@@ -2,6 +2,7 @@ import { oneProductType, responseType } from "@/component/utilis/ProductsType";
 import ProductDetails from "@/component/views/ProductDetails";
 import ContextWrapper from "@/global/Context";
 
+// metadata genrator
 export async function generateMetadata({
   params,
 }: {
@@ -12,38 +13,45 @@ export async function generateMetadata({
   const product = await fetch(
     `https://056jzpaf.api.sanity.io/v2023-07-25/data/query/production?query=*[_type == 'products']`
   ).then((res: any) => res.json());
+  
   const titleToSet: oneProductType = product.result.find(
     (item: oneProductType) => item.slug.current == slug
   );
+  
   return {
     title: titleToSet.productName,
     description: titleToSet.description,
   };
 }
 
-export async function generateStaticParams() {
-    let res = await fetch(
-      `https://056jzpaf.api.sanity.io/v2023-07-25/data/query/production?query=*[_type == 'products']`,
-      {
-        next: {
-          revalidate: 60,
-        },
-      }
-    ).then((res: any) => res.json());
-    return res.result.map((item: oneProductType) => { slug: item.slug });
-};
-
-async function fetchData(slug: string) {
-  let data = await fetch(
-    `https://056jzpaf.api.sanity.io/v2023-07-25/data/query/production?query=*%5B_type+%3D%3D+%27products%27+%26%26+slug.current+%3D%3D+%27${slug}%27%5D`
+// fetch particular data of product using slug
+async function fetchPreviewData(slug: string) {
+  let res = await fetch(
+    `https://056jzpaf.api.sanity.io/v2023-07-25/data/query/production?query=*%5B_type%20%3D%3D%20%22products%22%20%26%26%20slug.current%3D%3D%20%22${slug}%22%5D`
   );
-  return data.json();
+  return res.json();
 }
+
+// will make static pages of every product
+export async function generateStaticParams() {
+  let res = await fetch(
+    `https://056jzpaf.api.sanity.io/v2023-07-25/data/query/production?query=*[_type == 'products']`,
+    {
+      next: {
+        revalidate: 60,
+      },
+    }
+  ).then((res: any) => res.json());
+  return res.result.map((item: oneProductType) => {
+    slug: item.slug;
+  });
+}
+
 const Catalog = async ({ params }: { params: { slug: string } }) => {
-  let dataFetch : responseType = await fetchData(params.slug);
+  let data: responseType = await fetchPreviewData(params.slug);
   return (
     <ContextWrapper>
-      <ProductDetails item={dataFetch.result[0]} />
+      <ProductDetails item={data.result[0]} />
     </ContextWrapper>
   );
 };

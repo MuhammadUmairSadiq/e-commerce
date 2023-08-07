@@ -2,15 +2,18 @@ import { cartTableDrizzle, db } from "@/lib/drizzle";
 import { and, eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
-  try {
-    let allDataCart = await db.select().from(cartTableDrizzle);
-    return NextResponse.json({ allDataCart });
-  } catch (error) {
-    console.log("error : ", (error as { message: string }).message);
-    return NextResponse.json({ error });
-  }
-}
+export async function GET(req: NextRequest) {
+    let url = req.nextUrl.searchParams;
+    try {
+        if (url.has("user_id")) {
+            let allCartData = await db.select().from(cartTableDrizzle).where(eq(cartTableDrizzle.user_id, (url.get("user_id") as string)));
+            return NextResponse.json({ allCartData })
+        }
+    } catch (error) {
+        console.log("error : ", (error as { message: string }).message)
+        return NextResponse.json({ error })
+    };
+};
 
 
 export async function POST(req: NextRequest) {

@@ -1,26 +1,49 @@
-"use client"
-import { imagesType, oneProductType } from "@/component/utilis/ProductsType";
-import { FC, useState, useContext } from "react";
-import imageUrlBuilder from "@sanity/image-url";
-import { client } from "../../../../sanity/lib/client";
-import Image from "next/image";
-import { BsCart2 } from "react-icons/bs";
-import ContextWrapper, { cartContext } from "@/global/Context";
-import PortableText from "react-portable-text";
+"use client";
 import toast, { Toaster } from "react-hot-toast";
+import Image from "next/image";
+import {
+  imagesType,
+  oneProductType,
+} from "@/component/utilis/ProductsType";
+import { FC, useContext, useState } from "react";
+import { client } from "../../../../sanity/lib/client";
+import imageUrlBuilder from "@sanity/image-url";
+import { BsCart2 } from "react-icons/bs";
+import { cartContext } from "@/global/Context";
+import PortableText from "react-portable-text";
 
-const builder = imageUrlBuilder(client);
+const builder: any = imageUrlBuilder(client);
 
 function urlFor(source: any) {
   return builder.image(source);
 }
 
-const ProductDetails: FC<{ item: oneProductType }> = ({ item }) => {
-  let {  state,dispatch } = useContext(cartContext);
-  
+const ProductDetail: FC<{ item: oneProductType }> = ({ item }) => {
+  let { cartArray, userData, dispatch } = useContext(cartContext);
   const [imageForPreviewOfSelected, setImageForPreviewOfSelected] =
     useState<string>(item.image[0]._key);
   const [quantity, setQuantity] = useState(1);
+
+  function handleAddToCart() {
+    let isExsits = cartArray.some((elem: any) => elem.product_id === item._id);
+
+    if (userData) {
+      let dataToAddInCart = {
+        product_id: item._id,
+        quantity: quantity,
+        user_id: userData.uuid,
+         price: item.price,
+      };
+      if (!isExsits) {
+        dispatch("addToCart", dataToAddInCart);
+      } else {
+        dispatch("updateCart", dataToAddInCart);
+      }
+      notification(item.productName);
+    } else {
+      notificationError("Please login first");
+    }
+  }
 
   function incrementTheQuantity() {
     setQuantity(quantity + 1);
@@ -33,28 +56,25 @@ const ProductDetails: FC<{ item: oneProductType }> = ({ item }) => {
   }
 
   const notification = (title: string) => {
-    toast.success(` ${quantity} ${title} added to Cart`, {
-      position: "top-center",
+    toast(` ${quantity} ${title} added to Cart`, {
+      icon: "👏",
+      position: "top-right",
     });
   };
 
-  function handleAddToCart() {
-    let dataInCart = {
-        productId : item._id,
-        quantity:quantity
-    }
-    dispatch({ payload: "addToCart", data : dataInCart });
-    notification(item.productName); 
-  }
-
+  const notificationError = (title: string) => {
+    toast(title, {
+      position: "top-right",
+    });
+  };
 
   return (
-    <ContextWrapper>
+    <div>
       <Toaster />
       <div className="flex flex-col lg:flex-row justify-center items-center py-7">
-        {/* LEFT */}
+        {/* left */}
         <div className="flex gap-x-4 md:gap-x-8">
-          {/* LEFT */}
+          {/* left */}
           <div className="space-y-4">
             {item.image.map((subItem: imagesType, index: number) => (
               <div
@@ -65,14 +85,14 @@ const ProductDetails: FC<{ item: oneProductType }> = ({ item }) => {
                 <Image
                   width={1000}
                   height={1000}
-                  src={urlFor(subItem).width(1000).height(1000).url()}
                   alt={subItem.alt}
+                  src={urlFor(subItem).width(1000).height(1000).url()}
                 />
               </div>
             ))}
           </div>
 
-          {/* LEFT->RIGHT */}
+          {/* right */}
           <div className="w-[17rem] md:w-[33rem] flex flex-wrap-0">
             {item.image.map((subItem: imagesType, index: number) => {
               if (subItem._key === imageForPreviewOfSelected) {
@@ -81,8 +101,8 @@ const ProductDetails: FC<{ item: oneProductType }> = ({ item }) => {
                     key={index}
                     width={1000}
                     height={1000}
-                    src={urlFor(subItem).width(1000).height(1000).url()}
                     alt={subItem.alt}
+                    src={urlFor(subItem).width(1000).height(1000).url()}
                   />
                 );
               }
@@ -90,17 +110,16 @@ const ProductDetails: FC<{ item: oneProductType }> = ({ item }) => {
           </div>
         </div>
 
-        {/* RIGHT */}
+        {/* right */}
         <div className="p-6 space-y-8">
           <div>
             <h1 className="text-3xl text-gray-700">{item.productName}</h1>
             <p className="text-pink-600 text-xl font-medium">
-              {item.productTypes[0]}
+              {item.productTypes[1]}
             </p>
           </div>
-
           <div className="space-y-2">
-            <p className="text-lg font-semibold text-gray-700">SELECT SIZE</p>
+            <p className="text-lg font-semibold text-gray-700">Select Size</p>
             <div className="flex gap-2 text-pink-600">
               {item.size.map((subItem: string, index: number) => (
                 <div
@@ -112,7 +131,6 @@ const ProductDetails: FC<{ item: oneProductType }> = ({ item }) => {
               ))}
             </div>
           </div>
-
           <div className="flex space-x-7">
             <p className="font-semibold text-xl text-gray-800">Quantity:</p>
             <div className="flex gap-2 items-center text-lg">
@@ -131,7 +149,6 @@ const ProductDetails: FC<{ item: oneProductType }> = ({ item }) => {
               </div>
             </div>
           </div>
-
           <div className="flex gap-x-8 items-center">
             <button
               onClick={() => handleAddToCart()}
@@ -147,7 +164,6 @@ const ProductDetails: FC<{ item: oneProductType }> = ({ item }) => {
           </div>
         </div>
       </div>
-
       <div>
         <div className="relative py-14 px-2 border-b border-gray-400">
           <h2 className="top-0 absolute text-6xl md:text-[9rem] font-bold text-gray-200 text-center mx-auto -z-50 ">
@@ -178,8 +194,8 @@ const ProductDetails: FC<{ item: oneProductType }> = ({ item }) => {
         </div>
       </div>
       <div className="h-16" />
-    </ContextWrapper>
+    </div>
   );
 };
 
-export default ProductDetails; 
+export default ProductDetail;

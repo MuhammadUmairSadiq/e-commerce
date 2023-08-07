@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { FC } from "react";
-import { PreLoader } from "../../assests";
+import { PreLoader } from "../assests";
 
 const LoadingComp: FC<{ size: string }> = ({ size }) => {
   return (

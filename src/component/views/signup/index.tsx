@@ -13,7 +13,7 @@ type SignupFormData = {
 
 
 const notificationError = (title: string) => {
-    toast(title, {
+    toast.error(title, {
         position: "top-right"
     })
 };

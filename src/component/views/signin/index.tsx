@@ -5,7 +5,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { ImGoogle } from "react-icons/im";
 
 const notificationError = (title: string) => {
-  toast(title, {
+  toast.error(title, {
     position: "top-right",
   });
 };

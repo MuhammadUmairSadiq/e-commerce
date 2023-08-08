@@ -194,7 +194,7 @@ const ContextWrapper = ({ children }: { children: ReactNode }) => {
       updateProfile(user, {
         displayName: userName,
         photoURL:
-          "https://abdulbasit-self.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FAbdulBasit.40cf649b.png&w=640&q=75",
+          "https://e-commerce-puce-eight.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile.100f807c.jpeg&w=384&q=75",
       })
         .then(() => {
           setLoading(false);

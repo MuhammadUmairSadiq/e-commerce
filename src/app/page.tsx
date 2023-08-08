@@ -1,10 +1,9 @@
 import Main from "@/component/views/Main";
 import ProductType from "@/component/views/ProductType";
-import { oneProductType, responseType } from "@/component/utilis/ProductsType";
+import {  responseType } from "@/component/utilis/ProductsType";
 import ProductCard from "@/component/views/ProductCard";
 import Description from "@/component/views/Description";
 import Newsletter from "@/component/views/Newsletter";
-import Footer from "@/component/views/Footer";
 
 async function fetchAllProductsData() {
   let res = await fetch(

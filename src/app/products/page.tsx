@@ -16,9 +16,7 @@ async function fetchData() {
 const Products = async () => {
     const productData = await fetchData();
   return (
-    <div>
       <AllProduct productData={productData} />
-    </div>
   );
 };
 
